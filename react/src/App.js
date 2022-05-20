@@ -15,7 +15,7 @@ function App() {
 			<Header />
 			<Routes>
 				<Route path='/' element={<Main />} />
-				<Route path='/list' element={<List />} />
+				<Route path='/list' element={<List list={list} />} />
 				<Route path='/Post' element={<Post list={list} setList={setList} />} />
 			</Routes>
 		</>
