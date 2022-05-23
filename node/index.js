@@ -21,7 +21,7 @@ app.listen(port, () => {
 	// 안에 몽고디비의 주소를 써주고 아이디:비번도써준다
 	mongoose
 		.connect(
-			'mongodb+srv://eura:euranode@cluster0.z0yde.mongodb.net/?retryWrites=true&w=majority'
+			'mongodb+srv://eura:euranode@cluster0.z0yde.mongodb.net/Community?retryWrites=true&w=majority'
 		)
 		.then(() => {
 			console.log(`Server app listening in port ${port}`);
@@ -58,4 +58,17 @@ app.post('/api/test', (req, res) => {
 		// 이후 db에 데이터가 잘 저장되면 응답처리
 		res.status(200).json({ success: true, text: 'data saved' });
 	});
+});
+
+app.post('/api/post/submit', (req, res) => {
+	const CommunityPost = new Post(req.body);
+
+	CommunityPost.save()
+		.then(() => {
+			res.status(200).json({ success: true });
+		})
+		.catch((err) => {
+			console.log(err);
+			res.status(400).json({ success: false });
+		});
 });

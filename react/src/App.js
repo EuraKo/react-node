@@ -5,18 +5,16 @@ import Main from './component/Main';
 import List from './component/List';
 import Post from './component/Post';
 
+import './scss/style.scss';
+
 function App() {
-	const [list, setList] = useState([]);
-	useEffect(() => {
-		console.log(list);
-	}, [list]);
 	return (
 		<>
 			<Header />
 			<Routes>
 				<Route path='/' element={<Main />} />
-				<Route path='/list' element={<List list={list} />} />
-				<Route path='/Post' element={<Post list={list} setList={setList} />} />
+				<Route path='/list' element={<List />} />
+				<Route path='/Post' element={<Post />} />
 			</Routes>
 		</>
 	);
