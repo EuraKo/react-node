@@ -43,7 +43,7 @@ app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname, '../react/build/index.html'));
 });
 
-//클라이언트로 부터 넘어온 요청처리 라우터
+/* //클라이언트로 부터 넘어온 요청처리 라우터
 app.post('/api/test', (req, res) => {
 	console.log(req.body);
 
@@ -58,11 +58,14 @@ app.post('/api/test', (req, res) => {
 		// 이후 db에 데이터가 잘 저장되면 응답처리
 		res.status(200).json({ success: true, text: 'data saved' });
 	});
-});
+}); */
 
+// post의 첫번째 인수는 '/api/post/submit' 카테고리라고 생각하면됨
+// 디비상에서 확인되는건 아니고 리액트의 Post.js파일 axios안에 있는 애랑 연결되는거라서 둘만 이름이 같으면 된다. /api는 데이터통신할거다 /post는 post명해서 임의로 지정 아무거나 지정해도 상관없지만 데이터가 많아지면 구분이 힘들기 때문에 나눠준다.
 app.post('/api/post/submit', (req, res) => {
 	const CommunityPost = new Post(req.body);
 
+	// 인스턴스값이 save로 데이터가 저장을 성공하면 프로미스객체를 반환한다
 	CommunityPost.save()
 		.then(() => {
 			res.status(200).json({ success: true });

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; //특정페이지로 이동하거나 백하는거
 
 function Post(props) {
 	const [title, setTitle] = useState('');
