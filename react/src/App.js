@@ -2,9 +2,9 @@ import { Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Header from './component/Header';
 import Main from './component/Main';
-import List from './component/List';
-import Post from './component/Post';
-import Detail from './component/Detail';
+import List from './component/post/List';
+import Post from './component/post/Post';
+import Detail from './component/post/Detail';
 
 import './scss/style.scss';
 

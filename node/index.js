@@ -8,6 +8,7 @@ const port = 5000;
 const { Post } = require('./model/Post.js');
 // Counter모델 불러옴 (미리 만들어진 스키마 규칙이 적용한 모델을 불러와도 DB에 적용됨)
 const { Counter } = require('./model/Counter.js');
+const { emitWarning } = require('process');
 
 // mongodb+srv://eura:euranode@cluster0.z0yde.mongodb.net/?retryWrites=true&w=majority
 
@@ -106,5 +107,21 @@ app.post('/api/post/list', (req, res) => {
 		.catch((err) => {
 			console.log(err);
 			res.status(400).json({ success: false });
+		});
+});
+
+// 상세글 호출
+app.post('/api/post/detail', (req, res) => {
+	// body-parser넘어올때 기본적으로 문자로 넘어오기떄문에 숫자로 변환해서 넘겨줘야함
+	Post.findOne({ postNum: Number(req.body.postNum) })
+		.exec()
+		.then((doc) => {
+			// 터미널에서 찍힌다.
+			console.log(doc);
+			// 찾아진 결과값을 post에 담아 프론트에 응답
+			res.status(200).json({ success: true, post: doc });
+		})
+		.catch((err) => {
+			console.log(err);
 		});
 });
