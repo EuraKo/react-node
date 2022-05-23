@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 function List(props) {
 	const [list, setList] = useState([]);
 
+	// 화면 로딩시 리스트 뿌리기
 	useEffect(() => {
 		axios
 			.post('/api/post/list')
@@ -29,6 +30,7 @@ function List(props) {
 					<React.Fragment key={idx}>
 						<article>
 							<h2>
+								{/* 해당 게시글의 postNum값을 이용하여 이동 url연결 */}
 								<Link to={`/post/${post.postNum}`}>{post.title}</Link>
 							</h2>
 							<p>{post.content}</p>

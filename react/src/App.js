@@ -16,6 +16,7 @@ function App() {
 				<Route path='/' element={<Main />} />
 				<Route path='/list' element={<List />} />
 				<Route path='/Post' element={<Post />} />
+				{/* :postNum은 postNum을 주소에 전달한다는 뜻 */}
 				<Route path='/post/:postNum' element={<Detail />} />
 			</Routes>
 		</>
