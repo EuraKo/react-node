@@ -60,6 +60,7 @@ app.post('/api/test', (req, res) => {
 	});
 }); */
 
+//C : 전송버튼 클릭 시 넘오는 글 저장 요청
 // post의 첫번째 인수는 '/api/post/submit' 카테고리라고 생각하면됨
 // 디비상에서 확인되는건 아니고 리액트의 Post.js파일 axios안에 있는 애랑 연결되는거라서 둘만 이름이 같으면 된다. /api는 데이터통신할거다 /post는 post명해서 임의로 지정 아무거나 지정해도 상관없지만 데이터가 많아지면 구분이 힘들기 때문에 나눠준다.
 app.post('/api/post/submit', (req, res) => {
@@ -69,6 +70,21 @@ app.post('/api/post/submit', (req, res) => {
 	CommunityPost.save()
 		.then(() => {
 			res.status(200).json({ success: true });
+		})
+		.catch((err) => {
+			console.log(err);
+			res.status(400).json({ success: false });
+		});
+});
+
+// R:목록페이지 접속시 db데이터 글 호출 요청
+app.post('/api/post/list', (req, res) => {
+	//  find는 해당목록 전부다 가져오는거
+	Post.find()
+		.exec()
+		.then((doc) => {
+			// 성고하면 postList라는 객체를 만들어서 넘겨라
+			res.status(200).json({ success: true, postList: doc });
 		})
 		.catch((err) => {
 			console.log(err);
