@@ -6,6 +6,8 @@ const port = 5000;
 
 // Post 모델 불러옴
 const { Post } = require('./model/Post.js');
+// Counter모델 불러옴 (미리 만들어진 스키마 규칙이 적용한 모델을 불러와도 DB에 적용됨)
+const { Counter } = require('./model/Counter.js');
 
 // mongodb+srv://eura:euranode@cluster0.z0yde.mongodb.net/?retryWrites=true&w=majority
 
@@ -64,12 +66,27 @@ app.post('/api/test', (req, res) => {
 // post의 첫번째 인수는 '/api/post/submit' 카테고리라고 생각하면됨
 // 디비상에서 확인되는건 아니고 리액트의 Post.js파일 axios안에 있는 애랑 연결되는거라서 둘만 이름이 같으면 된다. /api는 데이터통신할거다 /post는 post명해서 임의로 지정 아무거나 지정해도 상관없지만 데이터가 많아지면 구분이 힘들기 때문에 나눠준다.
 app.post('/api/post/submit', (req, res) => {
-	const CommunityPost = new Post(req.body);
+	let temp = req.body;
+	// 리액트에서 가져온 데이터에 Counter모델로 부터 postNum값을 찾아서 추가
+	// 이때 findOne메서드로 찾을 조건을 설정
+	Counter.findOne({ name: 'counter' })
+		.exec()
+		.then((doc) => {
+			// 기존 클라이언트에서 받은 데이터에 카운터 모델의 postNum값을 추가 적용
+			temp.postNum = doc.postNum;
+			// postNum값이 추가된 게시글 데이터를 DB에 저장
+			const CommunityPost = new Post(temp);
 
-	// 인스턴스값이 save로 데이터가 저장을 성공하면 프로미스객체를 반환한다
-	CommunityPost.save()
-		.then(() => {
-			res.status(200).json({ success: true });
+			// 인스턴스값이 save로 데이터가 저장을 성공하면 프로미스객체를 반환한다
+			CommunityPost.save().then(() => {
+				// 저장이 성공하면 카운터 모델을 다시 불러와서 기존 postNum값을 1씩 증가
+				Counter.updateOne({ name: 'counter' }, { $inc: { postNum: 1 } }).then(
+					() => {
+						// 기존 Counter모델의 postNum값까지 정상적으로 증가되면 클라이언트에 응답
+						res.status(200).json({ success: true });
+					}
+				);
+			});
 		})
 		.catch((err) => {
 			console.log(err);
@@ -83,7 +100,7 @@ app.post('/api/post/list', (req, res) => {
 	Post.find()
 		.exec()
 		.then((doc) => {
-			// 성고하면 postList라는 객체를 만들어서 넘겨라
+			// 성공하면 postList라는 객체를 만들어서 넘겨라
 			res.status(200).json({ success: true, postList: doc });
 		})
 		.catch((err) => {
