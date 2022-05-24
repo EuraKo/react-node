@@ -1,10 +1,9 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
+const config = require('./config/key.js'); // 배포와 개발을 나눠 몽고디비 정보 숨기기
 const app = express();
 const port = 5000;
-
-// mongodb+srv://eura:euranode@cluster0.z0yde.mongodb.net/?retryWrites=true&w=majority
 
 // express에서 react폴더 안쪽에 react폴더를 static(추가가공없다는뜻)으로 지정
 app.use(express.static(path.join(__dirname, '../react/build')));
@@ -21,9 +20,7 @@ app.listen(port, () => {
 	// connect는 promise객체를 반환한다.
 	// 안에 몽고디비의 주소를 써주고 아이디:비번도써준다
 	mongoose
-		.connect(
-			'mongodb+srv://eura:euranode@cluster0.z0yde.mongodb.net/Community?retryWrites=true&w=majority'
-		)
+		.connect(config)
 		.then(() => {
 			console.log(`Server app listening in port ${port}`);
 			console.log('connecting mongoDB...');
