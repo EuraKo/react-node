@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
+const multer = require('multer');
 const app = express();
 const port = 5000;
 
@@ -155,7 +156,31 @@ app.post('/api/post/delete', (req, res) => {
 		});
 });
 
+// multer호출 구문 입력
+// formData로 불러와진 저장 위치 지정 및 파일명 변경
+const storage = multer.diskStorage({
+	destination: (req, file, cb) => {
+		// 이미지 파일이 저장될 폴더경로 저장
+		cb(null, 'img/');
+	},
+	filename: (req, file, cb) => {
+		cb(null, Date.now() + '-' + file.originalname);
+	},
+});
+
+const upload = multer({ storage: storage }).single('file');
+
 // 이미지 업로드 요청
 app.post('/api/post/imgUpload', (req, res) => {
-	console.log(req.formData);
+	upload(req, res, (err) => {
+		if (err) {
+			console.log(err);
+			res.status(400).json({ success: false });
+		} else {
+			// 이미지 첨부하면 받아지는 이미지 정보값 확인
+			console.log(res.req.file);
+			// 이미지 파일 정보값중에서 경로값을 다시 다시 클라이언트로 전달
+			res.status(200).json({ success: true, filePath: res.req.file.path });
+		}
+	});
 });
