@@ -95,6 +95,12 @@
 	#detail {
 		.inner {
 			article {
+				h2 {
+					margin-bottom: 20px;
+				}
+				> img {
+					max-width: 100%;
+				}
 				.btns {
 					position: absolute;
 					right: 50px;

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import axios from 'axios';
+import PostImg from './PostImg';
 
 function Edit() {
 	const params = useParams();
@@ -8,6 +9,7 @@ function Edit() {
 	const [detail, setDetail] = useState({});
 	const [title, setTitle] = useState('');
 	const [content, setContent] = useState('');
+	const [img, setImg] = useState('');
 	//처음 컴포넌트 마운트시 수정할 데이터를 불러와서 detail에 담음
 	useEffect(() => {
 		const body = { postNum: params.postNum };
@@ -27,6 +29,7 @@ function Edit() {
 	useEffect(() => {
 		setTitle(detail.title);
 		setContent(detail.content);
+		setImg(detail.img);
 	}, [detail]);
 
 	const onEdit = () => {
@@ -37,6 +40,7 @@ function Edit() {
 			title: title,
 			content: content,
 			postNum: params.postNum,
+			img: img,
 		};
 
 		axios
@@ -67,7 +71,8 @@ function Edit() {
 							setTitle(e.target.value);
 						}}
 					/>
-
+					<PostImg setImg={setImg} />
+					{console.log(img)}
 					<label htmlFor='content'>Content</label>
 					<textarea
 						name='content'

@@ -15,6 +15,7 @@ const { emitWarning } = require('process');
 
 // express에서 react폴더 안쪽에 react폴더를 static(추가가공없다는뜻)으로 지정
 app.use(express.static(path.join(__dirname, '../react/build')));
+app.use('/img', express.static('./img'));
 // client로 부터 전달받을 내용을 불러오기 위한 body-parser설정
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -132,6 +133,7 @@ app.post('/api/post/edit', (req, res) => {
 	const temp = {
 		title: req.body.title,
 		content: req.body.content,
+		img: req.body.img,
 	};
 	Post.updateOne({ postNum: Number(req.body.postNum) }, { $set: temp })
 		.exec()

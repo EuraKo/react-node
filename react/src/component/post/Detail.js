@@ -65,6 +65,7 @@ function Deatail() {
 				<h1>view detail</h1>
 				<article>
 					<h2>{detail.title}</h2>
+					{detail.img && <img src={`http://localhost:5000/${detail.img}`} />}
 					<p>{detail.content}</p>
 					<ul className='btns'>
 						<li>

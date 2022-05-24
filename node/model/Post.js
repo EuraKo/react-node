@@ -5,6 +5,7 @@ const postSchema = new mongoose.Schema(
 		title: String,
 		content: String,
 		postNum: Number, // 고유 id값
+		img: String,
 	},
 	{ collection: 'Post' }
 );

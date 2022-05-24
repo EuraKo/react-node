@@ -6,6 +6,7 @@ import PostImg from './PostImg';
 function Post() {
 	const [title, setTitle] = useState('');
 	const [content, setContent] = useState('');
+	const [img, setImg] = useState(''); // 업로드된 이미지 저장경로가 담길 state
 	const navigate = useNavigate();
 
 	const onSubmit = () => {
@@ -16,6 +17,7 @@ function Post() {
 		const body = {
 			title: title,
 			content: content,
+			img: img,
 		};
 
 		axios
@@ -46,7 +48,7 @@ function Post() {
 							setTitle(e.target.value);
 						}}
 					/>
-					<PostImg />
+					<PostImg setImg={setImg} />
 					<label htmlFor='content'>본문</label>
 					<textarea
 						name='content'

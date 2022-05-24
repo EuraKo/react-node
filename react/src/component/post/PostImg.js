@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { useState } from 'react';
 
-function PostImg() {
+function PostImg(props) {
 	const imgUpload = (e) => {
 		//입력된 파일 확인가능
 		console.log(e.target.files[0]);
@@ -13,13 +14,18 @@ function PostImg() {
 			.post('/api/post/imgUpload', formData)
 			.then((res) => {
 				console.log(res.data);
+				props.setImg(res.data.filePath);
 			})
 			.catch((err) => {
 				console.log(err);
 			});
 	};
 
-	return <input type='file' accept='image/*' onChange={imgUpload} />;
+	return (
+		<>
+			<input type='file' accept='image/*' onChange={imgUpload} />
+		</>
+	);
 }
 
 export default PostImg;
