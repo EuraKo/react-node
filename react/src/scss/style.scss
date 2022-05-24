@@ -1,11 +1,89 @@
 @import 'reset';
 
-header {
-	#gnb {
-		a {
-			margin: 0px 10px;
-			&.active {
-				color: hotpink;
+#root {
+	header {
+		width: 350px;
+		height: 100vh;
+		position: fixed;
+		background: #222;
+		top: 0px;
+		left: 0px;
+		padding: 50px;
+
+		h1 {
+			margin-bottom: 40px;
+			a {
+				font: 50px/1 'arial';
+				color: #fff;
+			}
+		}
+
+		#gnb {
+			a {
+				display: block;
+				padding: 10px;
+				font: bold 16px/1 'arial';
+				color: #bbb;
+
+				&.active {
+					color: hotpink;
+				}
+			}
+		}
+	}
+
+	> section {
+		float: right;
+		width: calc(100% - 350px);
+
+		.inner {
+			width: 100%;
+			padding: 50px;
+			padding-top: 60px;
+
+			h1 {
+				font: normal 40px/1 'arial';
+				color: #444;
+				margin-bottom: 30px;
+			}
+
+			> article {
+				width: 100%;
+				padding: 30px;
+				background: #fff;
+				margin-bottom: 30px;
+				box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+			}
+		}
+	}
+
+	#post {
+		.inner {
+			article {
+				label {
+					font: 16px/1 'arial';
+					color: #555;
+					margin-bottom: 10px;
+					display: block;
+				}
+				input[type='text'],
+				textarea {
+					width: 50%;
+					min-width: 300px;
+					padding: 5px 8px;
+					border: 1px solid #999;
+					margin-bottom: 20px;
+					resize: none;
+					display: block;
+				}
+				button {
+					display: inline-block;
+					padding: 5px 20px;
+					background: #555;
+					color: #fff;
+					cursor: pointer;
+					border: none;
+				}
 			}
 		}
 	}

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; //특정페이지로 이동하거나 백하는거
 
-function Post(props) {
+function Post() {
 	const [title, setTitle] = useState('');
 	const [content, setContent] = useState('');
 	const navigate = useNavigate();
@@ -33,26 +33,31 @@ function Post(props) {
 	};
 
 	return (
-		<section>
-			<label htmlFor='title'></label>
-			<input
-				type='text'
-				value={title}
-				onChange={(e) => {
-					setTitle(e.target.value);
-				}}
-			/>
-			<label htmlFor='content'>본문</label>
-			<textarea
-				name='content'
-				id='content'
-				cols='30'
-				rows='10'
-				value={content}
-				onChange={(e) => {
-					setContent(e.target.value);
-				}}></textarea>
-			<button onClick={onSubmit}>post</button>
+		<section id='post'>
+			<div className='inner'>
+				<h1>Write Post</h1>
+				<article>
+					<label htmlFor='title'></label>
+					<input
+						type='text'
+						value={title}
+						onChange={(e) => {
+							setTitle(e.target.value);
+						}}
+					/>
+					<label htmlFor='content'>본문</label>
+					<textarea
+						name='content'
+						id='content'
+						cols='30'
+						rows='10'
+						value={content}
+						onChange={(e) => {
+							setContent(e.target.value);
+						}}></textarea>
+					<button onClick={onSubmit}>post</button>
+				</article>
+			</div>
 		</section>
 	);
 }

@@ -22,23 +22,24 @@ function List(props) {
 	}, []);
 
 	return (
-		<section>
-			<h1>list</h1>
-			{list.map((post, idx) => {
-				return (
-					// <>에다가 키값주려고 React.Fragment이거 씀
-					<React.Fragment key={idx}>
-						<article>
-							<h2>
-								{/* 해당 게시글의 postNum값을 이용하여 이동 url연결 */}
-								<Link to={`/post/${post.postNum}`}>{post.title}</Link>
-							</h2>
-							<p>{post.content}</p>
-						</article>
-						<hr />
-					</React.Fragment>
-				);
-			})}
+		<section id='list'>
+			<div className='inner'>
+				<h1>list</h1>
+				{list.map((post, idx) => {
+					return (
+						// <>에다가 키값주려고 React.Fragment이거 씀
+						<React.Fragment key={idx}>
+							<article>
+								<h2>
+									{/* 해당 게시글의 postNum값을 이용하여 이동 url연결 */}
+									<Link to={`/post/${post.postNum}`}>{post.title}</Link>
+								</h2>
+								<p>{post.content}</p>
+							</article>
+						</React.Fragment>
+					);
+				})}
+			</div>
 		</section>
 	);
 }

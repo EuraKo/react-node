@@ -32,10 +32,12 @@ function Deatail() {
 
 	return (
 		<section>
-			<article>
-				<h2>{detail.title}</h2>
-				<p>{detail.content}</p>
-			</article>
+			<div className='inner'>
+				<article>
+					<h2>{detail.title}</h2>
+					<p>{detail.content}</p>
+				</article>
+			</div>
 		</section>
 	);
 }
