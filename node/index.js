@@ -154,3 +154,8 @@ app.post('/api/post/delete', (req, res) => {
 			res.status(400).json({ success: false });
 		});
 });
+
+// 이미지 업로드 요청
+app.post('/api/post/imgUpload', (req, res) => {
+	console.log(req.formData);
+});

@@ -70,9 +70,11 @@
 					display: block;
 				}
 				input[type='text'],
+				input[type='file'],
 				textarea {
 					width: 50%;
 					min-width: 300px;
+					min-height: 34px;
 					padding: 5px 8px;
 					border: 1px solid #999;
 					margin-bottom: 20px;

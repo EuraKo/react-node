@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; //특정페이지로 이동하거나 백하는거
+import PostImg from './PostImg';
 
 function Post() {
 	const [title, setTitle] = useState('');
@@ -45,6 +46,7 @@ function Post() {
 							setTitle(e.target.value);
 						}}
 					/>
+					<PostImg />
 					<label htmlFor='content'>본문</label>
 					<textarea
 						name='content'
