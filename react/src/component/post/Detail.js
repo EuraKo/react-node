@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function Deatail() {
 	// 라우터 파라미터 넘어온 값을 받음
@@ -30,12 +31,22 @@ function Deatail() {
 			});
 	}, []);
 
+	useEffect(() => {
+		console.log(detail);
+	}, [detail]);
+
 	return (
-		<section>
+		<section id='detail'>
 			<div className='inner'>
 				<article>
 					<h2>{detail.title}</h2>
 					<p>{detail.content}</p>
+					<ul className='btns'>
+						<li>
+							<Link to={`/edit/${detail.postNum}`}>Edit</Link>
+						</li>
+						<li>Delete</li>
+					</ul>
 				</article>
 			</div>
 		</section>
