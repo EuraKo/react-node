@@ -29,6 +29,30 @@ function Edit() {
 		setContent(detail.content);
 	}, [detail]);
 
+	const onEdit = () => {
+		if (title === '' || content === '') {
+			return alert('모든 항목을 입력하세요');
+		}
+		const body = {
+			title: title,
+			content: content,
+			postNum: params.postNum,
+		};
+
+		axios
+			.post('/api/post/edit', body)
+			.then((res) => {
+				if (res.data.success) {
+					alert('수정완료');
+					navigate(`/post/${params.postNum}`);
+				} else {
+					alert('수정실패');
+				}
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
 	return (
 		<section id='edit'>
 			<div className='inner'>
@@ -55,7 +79,8 @@ function Edit() {
 							setContent(e.target.value);
 						}}></textarea>
 
-					<button>edit</button>
+					<button onClick={() => navigate(-1)}>cancle</button>
+					<button onClick={onEdit}>edit</button>
 				</article>
 			</div>
 		</section>
