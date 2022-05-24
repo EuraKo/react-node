@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 function List(props) {
 	const [list, setList] = useState([]);
+	const [loaded, setLoaded] = useState(false);
 
 	// 화면 로딩시 리스트 뿌리기
 	useEffect(() => {
@@ -14,6 +15,7 @@ function List(props) {
 				if (res.data.success) {
 					console.log(res.data);
 					setList(res.data.postList);
+					setLoaded(true);
 				}
 			})
 			.catch((err) => {
@@ -25,6 +27,7 @@ function List(props) {
 		<section id='list'>
 			<div className='inner'>
 				<h1>list</h1>
+				{!loaded && <img src={`${process.env.PUBLIC_URL}/img/loading.gif`} />}
 				{list.map((post, idx) => {
 					return (
 						// <>에다가 키값주려고 React.Fragment이거 씀

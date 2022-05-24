@@ -8,7 +8,6 @@ function Edit() {
 	const [detail, setDetail] = useState({});
 	const [title, setTitle] = useState('');
 	const [content, setContent] = useState('');
-
 	//처음 컴포넌트 마운트시 수정할 데이터를 불러와서 detail에 담음
 	useEffect(() => {
 		const body = { postNum: params.postNum };
@@ -39,7 +38,7 @@ function Edit() {
 					<label htmlFor='title'>Title</label>
 					<input
 						type='text'
-						value={title}
+						value={title || ''} // title값이 없으면 ''를 넣겠다 이거넣어야 오류사라짐
 						onChange={(e) => {
 							setTitle(e.target.value);
 						}}
@@ -51,7 +50,7 @@ function Edit() {
 						id='content'
 						cols='30'
 						rows='10'
-						value={content}
+						value={content || ''}
 						onChange={(e) => {
 							setContent(e.target.value);
 						}}></textarea>
