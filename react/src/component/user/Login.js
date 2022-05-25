@@ -50,7 +50,6 @@ function Login() {
 						onChange={(e) => setPw(e.target.value)}
 					/>
 					<br />
-					{errMsg !== '' && <p className='err'>{errMsg}</p>}
 					<button onClick={handleLogin}>login</button>
 					<button
 						onClick={() => {
@@ -58,6 +57,11 @@ function Login() {
 						}}>
 						join
 					</button>
+					{errMsg !== '' && (
+						<p className='err' style={{ color: 'pink' }}>
+							{errMsg}
+						</p>
+					)}
 				</article>
 			</div>
 		</section>
