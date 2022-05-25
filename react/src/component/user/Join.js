@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import firebase from '../../firebase';
 
 function Join() {
 	const navigate = useNavigate();
@@ -7,6 +8,27 @@ function Join() {
 	const [pw1, setPw1] = useState('');
 	const [pw2, setPw2] = useState('');
 	const [name, setName] = useState('');
+
+	const handleJoin = async () => {
+		if (!(name && email && pw1 && pw2)) {
+			return alert('모든 항목을 입력해주세요');
+		}
+		if (pw1 !== pw2) {
+			return alert('비밀번호를 동일하게 입력하세요');
+		}
+
+		// 위 조건을 통과해서 회원가입을 하기 위한 정보값을 변수에 할당
+		// 이때 await문으로 firebase를 통해서 인증완료 이후에 다음 코드가 동작되도록 처리
+		let createdUser = await firebase
+			.auth()
+			.createUserWithEmailAndPassword(email, pw1);
+
+		await createdUser.user.updateProfile({
+			displayName: name,
+		});
+
+		console.log(createdUser); // user.multiFactor.user에 정보나옴
+	};
 
 	return (
 		<section id='join'>
@@ -37,11 +59,11 @@ function Join() {
 					<input
 						type='text'
 						value={name}
-						placeholder='이메일을 입력하세요'
+						placeholder='닉네임을 입력하세요'
 						onChange={(e) => setName(e.target.value)}
 					/>
 					<br />
-					<button>회원가입</button>
+					<button onClick={handleJoin}>회원가입</button>
 				</article>
 			</div>
 		</section>
