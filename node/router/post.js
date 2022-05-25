@@ -7,6 +7,7 @@ const multer = require('multer');
 const { Post } = require('../model/Post.js');
 // Counter모델 불러옴 (미리 만들어진 스키마 규칙이 적용한 모델을 불러와도 DB에 적용됨)
 const { Counter } = require('../model/Counter.js');
+const { User } = require('../model/User.js');
 
 //  기존 index.js에 있던 라우터를 가져옴
 
@@ -22,23 +23,34 @@ router.post('/submit', (req, res) => {
 		.then((doc) => {
 			// 기존 클라이언트에서 받은 데이터에 카운터 모델의 postNum값을 추가 적용
 			temp.postNum = doc.postNum;
+
+			// body로 전달된 값에 postNum까지 추가된 값에 다시 writer정보값 추가
+			User.findOne({ uid: req.body.uid })
+				.exec()
+				.then((userInfo) => {
+					// temp 객체에 writer키값을 추가하고 user다큐먼트정보에서 _id값에 해당하는 모든 정보를 넣어줌
+					temp.writer = userInfo._id;
+				});
+
 			// postNum값이 추가된 게시글 데이터를 DB에 저장
+			// 기존 CommunityPost 저장하는 구문을 이 곳으 ㅣthen구문 안쪽에 가져와서 temp에 write키값이 추가된것을 최종 저장
 			const CommunityPost = new Post(temp);
 
 			// 인스턴스값이 save로 데이터가 저장을 성공하면 프로미스객체를 반환한다
-			CommunityPost.save().then(() => {
-				// 저장이 성공하면 카운터 모델을 다시 불러와서 기존 postNum값을 1씩 증가
-				Counter.updateOne({ name: 'counter' }, { $inc: { postNum: 1 } }).then(
-					() => {
-						// 기존 Counter모델의 postNum값까지 정상적으로 증가되면 클라이언트에 응답
-						res.status(200).json({ success: true });
-					}
-				);
-			});
-		})
-		.catch((err) => {
-			console.log(err);
-			res.status(400).json({ success: false });
+			CommunityPost.save()
+				.then(() => {
+					// 저장이 성공하면 카운터 모델을 다시 불러와서 기존 postNum값을 1씩 증가
+					Counter.updateOne({ name: 'counter' }, { $inc: { postNum: 1 } }).then(
+						() => {
+							// 기존 Counter모델의 postNum값까지 정상적으로 증가되면 클라이언트에 응답
+							res.status(200).json({ success: true });
+						}
+					);
+				})
+				.catch((err) => {
+					console.log(err);
+					res.status(400).json({ success: false });
+				});
 		});
 });
 
