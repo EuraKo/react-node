@@ -5,6 +5,8 @@ import List from './component/post/List';
 import Post from './component/post/Post';
 import Detail from './component/post/Detail';
 import Edit from './component/post/Edit';
+import Login from './component/user/Login';
+import Join from './component/user/Join';
 
 import './scss/style.scss';
 
@@ -19,6 +21,9 @@ function App() {
 				{/* :postNum은 postNum을 주소에 전달한다는 뜻 */}
 				<Route path='/post/:postNum' element={<Detail />} />
 				<Route path='/edit/:postNum' element={<Edit />} />
+
+				<Route path='/login' element={<Login />} />
+				<Route path='/join' element={<Join />} />
 			</Routes>
 		</>
 	);

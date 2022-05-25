@@ -10,6 +10,15 @@ function Header() {
 				<NavLink to='/list'> List </NavLink>
 				<NavLink to='/post'> Post</NavLink>
 			</nav>
+
+			<ul id='util'>
+				<li>
+					<NavLink to='/login'>login</NavLink>
+				</li>
+				<li>
+					<NavLink to='/join'>join</NavLink>
+				</li>
+			</ul>
 		</header>
 	);
 }
