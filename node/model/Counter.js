@@ -3,6 +3,7 @@ const counterSchema = new mongoose.Schema(
 	{
 		name: String,
 		postNum: Number,
+		userNum: Number, // 로그인 용
 	},
 	{ collection: 'Counter' }
 );

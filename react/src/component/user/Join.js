@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import firebase from '../../firebase';
+import axios from 'axios';
 
 function Join() {
 	const navigate = useNavigate();
@@ -16,6 +17,10 @@ function Join() {
 		if (pw1 !== pw2) {
 			return alert('비밀번호를 동일하게 입력하세요');
 		}
+		// firebase에서 비번이 최소 6글자이상작성
+		if (pw1.length < 6) {
+			return alert('비밀번호는 최소 6글자 이상 입력하세요');
+		}
 
 		// 위 조건을 통과해서 회원가입을 하기 위한 정보값을 변수에 할당
 		// 이때 await문으로 firebase를 통해서 인증완료 이후에 다음 코드가 동작되도록 처리
@@ -28,6 +33,23 @@ function Join() {
 		});
 
 		console.log(createdUser); // user.multiFactor.user에 정보나옴
+
+		// 저장된 회원 정보값을 axios로 전달하기 위해서 객체로 저장
+		const body = {
+			email: createdUser.user.multiFactor.user.email,
+			displayName: createdUser.user.multiFactor.user.displayName,
+			uid: createdUser.user.multiFactor.user.uid,
+		};
+
+		axios.post('/api/user/join', body).then((res) => {
+			if (res.data.success) {
+				//회원가입성공
+				navigate('/login');
+			} else {
+				// 회원가입 실패
+				return alert('회원가입에 실패했습니다.');
+			}
+		});
 	};
 
 	return (
