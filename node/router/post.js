@@ -16,40 +16,34 @@ const { User } = require('../model/User.js');
 // 디비상에서 확인되는건 아니고 리액트의 Post.js파일 axios안에 있는 애랑 연결되는거라서 둘만 이름이 같으면 된다. /api는 데이터통신할거다 /post는 post명해서 임의로 지정 아무거나 지정해도 상관없지만 데이터가 많아지면 구분이 힘들기 때문에 나눠준다.
 router.post('/submit', (req, res) => {
 	let temp = req.body;
-	// 리액트에서 가져온 데이터에 Counter모델로 부터 postNum값을 찾아서 추가
-	// 이때 findOne메서드로 찾을 조건을 설정
 	Counter.findOne({ name: 'counter' })
 		.exec()
-		.then((doc) => {
-			// 기존 클라이언트에서 받은 데이터에 카운터 모델의 postNum값을 추가 적용
-			temp.postNum = doc.postNum;
+		.then((counter) => {
+			temp.postNum = counter.postNum;
 
-			// body로 전달된 값에 postNum까지 추가된 값에 다시 writer정보값 추가
+			//body로 전달된 값에 postNum까지 추가된 값에 다시 writer정보값 추가
 			User.findOne({ uid: req.body.uid })
 				.exec()
 				.then((userInfo) => {
-					// temp 객체에 writer키값을 추가하고 user다큐먼트정보에서 _id값에 해당하는 모든 정보를 넣어줌
+					//temp객체에 writer키값을 추가하고 user다큐먼트 정보에서 _id값에 해당 하는 모든 정보를 넣어줌
 					temp.writer = userInfo._id;
-				});
 
-			// postNum값이 추가된 게시글 데이터를 DB에 저장
-			// 기존 CommunityPost 저장하는 구문을 이 곳으 ㅣthen구문 안쪽에 가져와서 temp에 write키값이 추가된것을 최종 저장
-			const CommunityPost = new Post(temp);
-
-			// 인스턴스값이 save로 데이터가 저장을 성공하면 프로미스객체를 반환한다
-			CommunityPost.save()
-				.then(() => {
-					// 저장이 성공하면 카운터 모델을 다시 불러와서 기존 postNum값을 1씩 증가
-					Counter.updateOne({ name: 'counter' }, { $inc: { postNum: 1 } }).then(
-						() => {
-							// 기존 Counter모델의 postNum값까지 정상적으로 증가되면 클라이언트에 응답
-							res.status(200).json({ success: true });
-						}
-					);
-				})
-				.catch((err) => {
-					console.log(err);
-					res.status(400).json({ success: false });
+					//기존 CommunityPost 저장하는 구문을 이곳의 then구문 안쪽에 가져와서
+					//temp에 writer키값이 추가된 값을 최종 저장
+					const CommunityPost = new Post(temp);
+					CommunityPost.save()
+						.then(() => {
+							Counter.updateOne(
+								{ name: 'counter' },
+								{ $inc: { postNum: 1 } }
+							).then(() => {
+								res.status(200).json({ success: true });
+							});
+						})
+						.catch((err) => {
+							console.log(err);
+							res.status(400).json({ success: false });
+						});
 				});
 		});
 });
@@ -58,6 +52,7 @@ router.post('/submit', (req, res) => {
 router.post('/list', (req, res) => {
 	//  find는 해당목록 전부다 가져오는거
 	Post.find()
+		.populate('writer') // 데이터중에 ObjectId를 참조하는 데이터가 있으면 해당 참조 모델 데이터 까지 하위 객체로 합쳐서 가져옴
 		.exec()
 		.then((doc) => {
 			// 성공하면 postList라는 객체를 만들어서 넘겨라
@@ -73,6 +68,7 @@ router.post('/list', (req, res) => {
 router.post('/detail', (req, res) => {
 	// body-parser넘어올때 기본적으로 문자로 넘어오기떄문에 숫자로 변환해서 넘겨줘야함
 	Post.findOne({ postNum: Number(req.body.postNum) })
+		.populate('writer')
 		.exec()
 		.then((doc) => {
 			// 터미널에서 찍힌다.

@@ -29,6 +29,7 @@ function List(props) {
 				<h1>list</h1>
 				{!loaded && <img src={`${process.env.PUBLIC_URL}/img/loading.gif`} />}
 				{list.map((post, idx) => {
+					console.log(post);
 					return (
 						// <>에다가 키값주려고 React.Fragment이거 씀
 						<React.Fragment key={idx}>
@@ -38,6 +39,7 @@ function List(props) {
 									<Link to={`/post/${post.postNum}`}>{post.title}</Link>
 								</h2>
 								<p>{post.content}</p>
+								<span>writer: {post.writer.displayName}</span>
 							</article>
 						</React.Fragment>
 					);
