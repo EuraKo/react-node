@@ -8,6 +8,7 @@ router.post('/join', (req, res) => {
 	// 전달받은 객체  Counter모델로부터 불러온 userNum값을 추가하고 User모델 저장
 	const temp = req.body;
 	Counter.findOne({ name: 'counter' }).then((doc) => {
+		// console.log(doc); // db에 저장된 counter 값을 받아옴
 		// Counter모델에서 미리 만들어둔 userNum값을 가져와서
 		// 기존 temp객체에 추가
 		temp.userNum = doc.userNum;
