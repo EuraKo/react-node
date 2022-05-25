@@ -14,7 +14,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // post 전용 라우터 추가
 app.use('/api/post', require('./router/post.js'));
-app.use('/api/user', require('./reouter/user.js'));
+// user 전용 라우터
+app.use('/api/user', require('./router/user.js'));
 
 // 터미널에 뜨는 문구
 app.listen(port, () => {
