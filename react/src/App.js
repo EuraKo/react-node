@@ -17,17 +17,30 @@ import { useEffect } from 'react';
 
 function App() {
 	const dispatch = useDispatch();
+	const user = useSelector((store) => store.user);
 
 	useEffect(() => {
 		// auth상태 변화를 감지해서 인수로 해당 상태값을 전달
 		firebase.auth().onAuthStateChanged((userInfo) => {
-			console.log('userInfo : ', userInfo);
+			// console.log('userInfo : ', userInfo);
+
+			// 현재 firebase로 받은 유저정보값이 있으면
+			if (userInfo !== null) {
+				// 해당 정보값을 dispatch로 loginUser에 액션을 생성해서 전달
+				dispatch(loginUser(userInfo.multiFactor.user));
+			} else {
+				dispatch(logoutUser());
+			}
 		});
 	}, []);
 
+	useEffect(() => {
+		console.log(user);
+	}, [user]);
+
 	// 로그아웃 테스트
 	useEffect(() => {
-		firebase.auth().signOut();
+		// firebase.auth().signOut();
 	}, []);
 	return (
 		<>

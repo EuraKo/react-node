@@ -23,5 +23,5 @@ export const userSlice = createSlice({
 });
 
 // createSlice메서드로 생성한 2개의 loginUSer, logoutUser액션생성 함수를 내보냄
-export const { loginUSer, logoutUser } = userSlice.actions; // reducers에 있는 걸 actions로 받아오는것임
+export const { loginUser, logoutUser } = userSlice.actions; // reducers에 있는 걸 actions로 받아오는것임
 export default userSlice.reducer; // 리덕스툴킷에 있는 구문이라 적음
