@@ -1,5 +1,6 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 
 function Detail() {
@@ -7,6 +8,7 @@ function Detail() {
 	const navigate = useNavigate();
 	const [detail, setDetail] = useState({});
 	const [loaded, setLoaded] = useState(false);
+	const user = useSelector((store) => store.user);
 
 	useEffect(() => {
 		const body = {
@@ -59,13 +61,14 @@ function Detail() {
 						<p>{detail.content}</p>
 
 						<span>Writer: {detail.writer.displayName}</span>
-
-						<ul className='btns'>
-							<li>
-								<Link to={`/edit/${detail.postNum}`}>Edit</Link>
-							</li>
-							<li onClick={onDelete}>Delete</li>
-						</ul>
+						{user.uid === detail.writer.uid && (
+							<ul className='btns'>
+								<li>
+									<Link to={`/edit/${detail.postNum}`}>Edit</Link>
+								</li>
+								<li onClick={onDelete}>Delete</li>
+							</ul>
+						)}
 					</article>
 				) : (
 					<img
