@@ -1,7 +1,9 @@
-import { NavLink } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import firebase from '../firebase';
 
 function Header() {
+	const navigate = useNavigate();
 	const user = useSelector((store) => store.user);
 
 	return (
@@ -17,7 +19,13 @@ function Header() {
 			<ul id='util'>
 				{user.accessToken !== '' ? (
 					<>
-						<li>Logout</li>
+						<li
+							onClick={() => {
+								firebase.auth().signOut();
+								navigate('/');
+							}}>
+							Logout
+						</li>
 						<li>{user.displayName}님 반갑습니다.</li>
 					</>
 				) : (
