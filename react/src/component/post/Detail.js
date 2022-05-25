@@ -61,6 +61,7 @@ function Detail() {
 						<p>{detail.content}</p>
 
 						<span>Writer: {detail.writer.displayName}</span>
+						{/* 현쟈 로그인된 사용자와 글작성자의 아이디값이 같을때만 수정,삭제버튼 출력 */}
 						{user.uid === detail.writer.uid && (
 							<ul className='btns'>
 								<li>
