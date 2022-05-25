@@ -1,6 +1,9 @@
 import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function Header() {
+	const user = useSelector((store) => store.user);
+
 	return (
 		<header>
 			<h1>
@@ -12,12 +15,22 @@ function Header() {
 			</nav>
 
 			<ul id='util'>
-				<li>
-					<NavLink to='/login'>login</NavLink>
-				</li>
-				<li>
-					<NavLink to='/join'>join</NavLink>
-				</li>
+				{user.accessToken !== '' ? (
+					<>
+						<li>Logout</li>
+						<li>{user.displayName}님 반갑습니다.</li>
+					</>
+				) : (
+					<>
+						<li>
+							<NavLink to='/login'>login</NavLink>
+						</li>
+
+						<li>
+							<NavLink to='/join'>join</NavLink>
+						</li>
+					</>
+				)}
 			</ul>
 		</header>
 	);
