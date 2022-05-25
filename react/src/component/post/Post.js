@@ -1,13 +1,22 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'; //특정페이지로 이동하거나 백하는거
 import PostImg from './PostImg';
 
 function Post() {
+	const user = useSelector((store) => store.user);
 	const [title, setTitle] = useState('');
 	const [content, setContent] = useState('');
 	const [img, setImg] = useState(''); // 업로드된 이미지 저장경로가 담길 state
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (user.accessToken === '') {
+			alert('로그인된 회원만 글을 입력할 수 있습니다.');
+			navigate('/login');
+		}
+	}, []);
 
 	const onSubmit = () => {
 		if (title === '' || content === '') {
