@@ -23,7 +23,8 @@ function PostImg(props) {
 
 	return (
 		<>
-			<input type='file' accept='image/*' onChange={imgUpload} />
+			<label htmlFor='file'>File</label>
+			<input type='file' id='file' accept='image/*' onChange={imgUpload} />
 		</>
 	);
 }

@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import 'moment/locale/ko';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faImages } from '@fortawesome/free-solid-svg-icons';
 
 function List(props) {
 	const [list, setList] = useState([]);
@@ -21,9 +23,9 @@ function List(props) {
 		axios
 			.post('/api/post/list', body)
 			.then((res) => {
-				console.log(res);
+				// console.log(res);
 				if (res.data.success) {
-					console.log(res.data);
+					// console.log(res.data);
 					setList(res.data.postList);
 					setLoaded(true);
 				}
@@ -46,51 +48,64 @@ function List(props) {
 
 				{!props.hideSearch && (
 					<>
-						<h1>list</h1>
-						<button
-							onClick={() => {
-								setSort('new');
-							}}>
-							최신순
-						</button>
-						<button
-							onClick={() => {
-								setSort('old');
-							}}>
-							게시순
-						</button>
-						<input
-							type='text'
-							value={search}
-							onChange={(e) => setSearch(e.target.value)}
-							onKeyUp={(e) => {
-								if (e.keyCode === 13) handleSearch();
-							}}
-						/>
+						<h1>NOTICE</h1>
+						<div className='search_group'>
+							<div className='left'>
+								<button
+									onClick={() => {
+										setSort('new');
+									}}>
+									최신순
+								</button>
+								<button
+									className='btn_green'
+									onClick={() => {
+										setSort('old');
+									}}>
+									게시순
+								</button>
+							</div>
+							<div className='right'>
+								<input
+									type='text'
+									value={search}
+									onChange={(e) => setSearch(e.target.value)}
+									onKeyUp={(e) => {
+										if (e.keyCode === 13) handleSearch();
+									}}
+								/>
+								<button onClick={handleSearch}>SEARCH</button>
+							</div>
+						</div>
 					</>
 				)}
-
-				{list.map((post, idx) => {
-					console.log(post);
-					return (
-						// <>에다가 키값주려고 React.Fragment이거 씀
-						<React.Fragment key={idx}>
-							<article>
-								<h2>
-									{/* 해당 게시글의 postNum값을 이용하여 이동 url연결 */}
-									<Link to={`/post/${post.postNum}`}>{post.title}</Link>
-								</h2>
-								<p>{post.content}</p>
-								<p>writer: {post.writer.displayName}</p>
-								<p>
-									작성일 :
-									{moment(post.createdAt).format('YYYY MMMM Do, a hh:mm:ss')}
-								</p>
-								<p>업데이트 : {post.updatedAt}</p>
-							</article>
-						</React.Fragment>
-					);
-				})}
+				<div className='list_box'>
+					{list.map((post, idx) => {
+						// console.log(post);
+						return (
+							// <>에다가 키값주려고 React.Fragment이거 씀
+							<React.Fragment key={idx}>
+								<article>
+									<Link to={`/post/${post.postNum}`}>
+										<p className='writer'>{post.writer.displayName}</p>
+										<h2 className='title'>
+											{/* 해당 게시글의 postNum값을 이용하여 이동 url연결 */}
+											{post.title}
+										</h2>
+										<p className='desc'>{post.content}</p>
+										<p className='date'>{moment(post.createdAt).format('L')}</p>
+										{/* <p>업데이트 : {post.updatedAt}</p> */}
+										{post.img !== '' && (
+											<div className='has_img'>
+												<FontAwesomeIcon icon={faImages} />
+											</div>
+										)}
+									</Link>
+								</article>
+							</React.Fragment>
+						);
+					})}
+				</div>
 			</div>
 		</section>
 	);

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import firebase from '../../firebase';
 import axios from 'axios';
 
@@ -84,40 +84,61 @@ function Join() {
 		<section id='join'>
 			<div className='inner'>
 				<article>
-					<h2>join member</h2>
+					<Link to='/' className='logo'>
+						<img src={`${process.env.PUBLIC_URL}/img/logo_w.svg`} alt='logo' />
+					</Link>
+					<label htmlFor='email'>E-mail</label>
 					<input
 						type='email'
+						id='email'
 						value={email}
 						placeholder='이메일을 입력하세요'
 						onChange={(e) => setEmail(e.target.value)}
 					/>
 					<br />
+					<label htmlFor='pw1'>Password</label>
 					<input
 						type='password'
+						id='pw1'
 						value={pw1}
 						placeholder='비밀번호를 입력하세요'
 						onChange={(e) => setPw1(e.target.value)}
 					/>
 					<br />
+					<label htmlFor='pw2'>Re Password</label>
 					<input
 						type='password'
+						id='pw2'
 						value={pw2}
 						placeholder='비밀번호를 재 입력하세요'
 						onChange={(e) => setPw2(e.target.value)}
 					/>
 					<br />
-					<input
-						type='text'
-						value={name}
-						placeholder='닉네임을 입력하세요'
-						onChange={(e) => setName(e.target.value)}
-					/>
-					<button onClick={handleNameCheck} className='btnCheck'>
-						중복검사
-					</button>
-					{nameInfo}
-					<br />
-					<button onClick={handleJoin}>회원가입</button>
+					<label htmlFor='naem'>Nick Name</label>
+					<div className='input_btn'>
+						<input
+							type='text'
+							id='name'
+							value={name}
+							placeholder='닉네임을 입력하세요'
+							onChange={(e) => setName(e.target.value)}
+							onKeyUp={(e) => {
+								if (e.keyCode === 13) handleNameCheck();
+							}}
+						/>
+						<button onClick={handleNameCheck} className='btn_transPink'>
+							중복검사
+						</button>
+					</div>
+					{nameInfo.indexOf('중복') !== -1 ? (
+						<div className='err'>{nameInfo}</div>
+					) : (
+						<div className='success'>{nameInfo}</div>
+					)}
+
+					<div className='btns'>
+						<button onClick={handleJoin}>회원가입</button>
+					</div>
 				</article>
 			</div>
 		</section>

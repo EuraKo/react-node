@@ -1,58 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;400;500&display=swap');
+$fontPoint: 'Raleway', sans-serif;
+
 @import 'reset';
+@import 'header';
+@import 'post';
+@import 'list';
+@import 'detail';
 
 #root {
-	header {
-		width: 350px;
-		height: 100vh;
-		position: fixed;
-		background: #222;
-		top: 0px;
-		left: 0px;
-		padding: 50px;
-
-		h1 {
-			margin-bottom: 40px;
-			a {
-				font: 50px/1 'arial';
-				color: #fff;
-			}
-		}
-
-		#gnb {
-			a {
-				display: block;
-				padding: 10px;
-				font: bold 16px/1 'arial';
-				color: #bbb;
-
-				&.active {
-					color: hotpink;
-				}
-			}
-		}
-		#util {
-			position: absolute;
-			bottom: 100px;
-			left: 50px;
-			li {
-				float: left;
-				margin-right: 40px;
-				color: #777;
-				a,
-				button {
-					font: 14px/1 sans-serif;
-					color: #777;
-					&.active {
-						color: pink;
-					}
-				}
-			}
-		}
-	}
-
 	> section {
 		float: right;
-		width: calc(100% - 350px);
+		width: calc(100% - 300px);
 
 		.inner {
 			width: 100%;
@@ -60,7 +18,8 @@
 			padding-top: 60px;
 
 			h1 {
-				font: normal 40px/1 'arial';
+				font: 500 40px/1 $fontPoint;
+				letter-spacing: 2px;
 				color: #444;
 				margin-bottom: 30px;
 			}
@@ -68,7 +27,6 @@
 			> article {
 				width: 100%;
 				padding: 30px 40px;
-				padding-right: 200px;
 				background: #fff;
 				margin-bottom: 30px;
 				box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
@@ -83,9 +41,23 @@
 	#join {
 		.inner {
 			article {
+				.logo {
+					display: block;
+					width: 120px;
+					height: 120px;
+					background-color: #f19f88;
+					padding: 30px;
+					border-radius: 50%;
+					margin: 0 auto 60px;
+					img {
+						width: 100%;
+						height: 100%;
+					}
+				}
 				label {
-					font: 16px/1 'arial';
-					color: #555;
+					font: 500 16px/1 $fontPoint;
+					letter-spacing: 2px;
+					color: #f19f88;
 					margin-bottom: 10px;
 					display: block;
 				}
@@ -94,57 +66,66 @@
 				input[type='email'],
 				input[type='password'],
 				textarea {
-					width: 50%;
+					width: 100%;
 					min-width: 300px;
-					min-height: 34px;
-					padding: 5px 8px;
-					border: 1px solid #999;
 					margin-bottom: 20px;
-					resize: none;
 					display: block;
 				}
-				button {
-					display: inline-block;
-					padding: 5px 20px;
-					background: #555;
-					color: #fff;
-					cursor: pointer;
-					border: none;
-				}
-				.btnCheck {
-					display: inline-block;
-				}
-			}
-		}
-	}
-	#detail {
-		.inner {
-			article {
-				h2 {
-					margin-bottom: 20px;
-				}
-				> img {
-					max-width: 100%;
+				.input_btn {
+					display: flex;
+					input {
+						width: calc(100% - 100px);
+						min-width: auto;
+						margin-bottom: 5px;
+					}
+					button {
+						flex: 0 0 100px;
+						margin-left: 10px;
+					}
 				}
 				.btns {
-					position: absolute;
-					right: 50px;
-					top: 50%;
-					transform: translateY(-50%);
-					li {
-						float: left;
-						display: inline-block;
-						padding: 4px 8px;
-						border: 1px solid #bbb;
-						font: 12px/1 'arial';
-						color: #999;
-						margin-left: 5px;
-						cursor: pointer;
-						a {
+					display: flex;
+					justify-content: center;
+					button {
+						width: 100px;
+						padding: 0;
+						text-align: center;
+						&:hover {
+							background-color: #4a7d7d;
+							border-color: #4a7d7d;
+						}
+						&.btn_transPink {
+							&:hover {
+								background-color: transparent;
+								border-color: #4a7d7d;
+								color: #4a7d7d;
+							}
 						}
 					}
 				}
 			}
+		}
+	}
+	#login,
+	#join {
+		.inner {
+			max-width: 500px;
+			margin: 0 auto;
+			.btns {
+				margin-top: 60px;
+			}
+		}
+	}
+	.err {
+		color: #d81a24;
+	}
+	.success {
+		color: #4a7d7d;
+	}
+	#login {
+		.err {
+			text-align: center;
+			margin-top: 20px;
 		}
 	}
 }

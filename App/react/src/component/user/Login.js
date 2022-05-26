@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import firebase from '../../firebase';
 
 function Login() {
@@ -23,7 +23,7 @@ function Login() {
 			} else if (err.code === 'auth/wrong-password') {
 				setErrMsg('비밀번호가 일치하지 않습니다.');
 			} else if (err.code === 'auth/invalid-email') {
-				setErrMsg('이메일 형식이 아닙니다');
+				setErrMsg('이메일 형식이 아닙니다.');
 			} else {
 				setErrMsg('로그인에 실패했습니다.');
 			}
@@ -34,34 +34,42 @@ function Login() {
 		<section id='login'>
 			<div className='inner'>
 				<article>
-					<h2>Login</h2>
-
+					<Link to='/' className='logo'>
+						<img src={`${process.env.PUBLIC_URL}/img/logo_w.svg`} alt='logo' />
+					</Link>
+					<label htmlFor='email'>E-mail</label>
 					<input
 						type='email'
+						id='email'
 						value={email}
 						placeholder='이메일을 입력하세요'
 						onChange={(e) => setEmail(e.target.value)}
 					/>
 					<br />
+					<label htmlFor='pw'>Password</label>
 					<input
 						type='password'
 						value={pw}
+						id='pw'
 						placeholder='비밀번호를 입력하세요'
 						onChange={(e) => setPw(e.target.value)}
+						onKeyUp={(e) => {
+							if (e.keyCode === 13) handleLogin();
+						}}
 					/>
 					<br />
-					<button onClick={handleLogin}>login</button>
-					<button
-						onClick={() => {
-							navigate('/join');
-						}}>
-						join
-					</button>
-					{errMsg !== '' && (
-						<p className='err' style={{ color: 'pink' }}>
-							{errMsg}
-						</p>
-					)}
+					<div className='btns'>
+						<button className='btn_transPink' onClick={handleLogin}>
+							login
+						</button>
+						<button
+							onClick={() => {
+								navigate('/join');
+							}}>
+							join
+						</button>
+					</div>
+					{errMsg !== '' && <p className='err'>{errMsg}</p>}
 				</article>
 			</div>
 		</section>

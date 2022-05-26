@@ -43,16 +43,17 @@ function Post() {
 			<div className='inner'>
 				<h1>Write Post</h1>
 				<article>
-					<label htmlFor='title'></label>
+					<label htmlFor='title'>Title</label>
 					<input
 						type='text'
+						id='title'
 						value={title}
 						onChange={(e) => {
 							setTitle(e.target.value);
 						}}
 					/>
 					<PostImg setImg={setImg} />
-					<label htmlFor='content'>본문</label>
+					<label htmlFor='content'>Content</label>
 					<textarea
 						name='content'
 						id='content'
@@ -62,7 +63,9 @@ function Post() {
 						onChange={(e) => {
 							setContent(e.target.value);
 						}}></textarea>
-					<button onClick={onSubmit}>post</button>
+					<div className='btns'>
+						<button onClick={onSubmit}>post</button>
+					</div>
 				</article>
 			</div>
 		</section>

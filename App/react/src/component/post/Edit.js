@@ -84,8 +84,12 @@ function Edit() {
 							setContent(e.target.value);
 						}}></textarea>
 
-					<button onClick={() => navigate(-1)}>cancle</button>
-					<button onClick={onEdit}>edit</button>
+					<div className='btns'>
+						<button className='btn_transPink' onClick={() => navigate(-1)}>
+							cancle
+						</button>
+						<button onClick={onEdit}>edit</button>
+					</div>
 				</article>
 			</div>
 		</section>

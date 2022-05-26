@@ -11,5 +11,56 @@ a {
 	text-decoration: none;
 }
 body {
-	background: #efefef;
+	// background: #efefef;
+}
+button,
+.btn {
+	height: 30px;
+	display: inline-block;
+	line-height: 30px;
+	color: inherit;
+	background-color: #f19f88;
+	border: 1px solid #f19f88;
+	padding: 0 20px;
+	color: #fff;
+	cursor: pointer;
+	transition: 0.3s;
+}
+.btn_green {
+	background-color: #4a7d7d;
+	border: 1px solid #4a7d7d;
+}
+.btn_transPink {
+	background-color: transparent;
+	color: #f19f88;
+}
+input[type='text'],
+input[type='email'],
+input[type='password'] {
+	width: 200px;
+	height: 30px;
+	background: transparent;
+	border: 1px solid transparent;
+	border-bottom: 1px solid #f19f88;
+	padding: 5px;
+	&:focus {
+		outline: none;
+		border: 1px solid #f19f88;
+		background: rgba(#e5bcad, 0.2);
+	}
+}
+input[type='file'] {
+	cursor: pointer;
+	border: 1px solid #f19f88;
+	padding: 5px;
+}
+textarea {
+	height: 300px;
+	resize: none;
+	border: 1px solid #f19f88;
+	padding: 5px;
+	&:focus {
+		outline: none;
+		background: rgba(#e5bcad, 0.2);
+	}
 }
