@@ -3,7 +3,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const config = require('./server/config/key.js'); // 배포와 개발을 나눠 몽고디비 정보 숨기기
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 // express에서 react폴더 안쪽에 react폴더를 static(추가가공없다는뜻)으로 지정
 app.use(express.static(path.join(__dirname, './react/build')));
