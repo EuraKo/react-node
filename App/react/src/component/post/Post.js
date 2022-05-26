@@ -52,7 +52,7 @@ function Post() {
 							setTitle(e.target.value);
 						}}
 					/>
-					<PostImg setImg={setImg} />
+					<PostImg setImg={setImg} page={'new'} />
 					<label htmlFor='content'>Content</label>
 					<textarea
 						name='content'
