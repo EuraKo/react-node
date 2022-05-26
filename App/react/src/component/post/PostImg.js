@@ -32,6 +32,7 @@ function PostImg(props) {
 				<FontAwesomeIcon icon={faFileImage} className='icon' />
 				<input type='file' id='file' accept='image/*' onChange={imgUpload} />
 				<div className='now_img'>
+					{console.log(props.img)}
 					{props.img !== '' && props.img !== undefined
 						? props.img
 						: '첨부된 이미지가 없습니다.'}
