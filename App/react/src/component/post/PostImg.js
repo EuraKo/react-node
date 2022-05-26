@@ -5,6 +5,9 @@ import { faFileImage } from '@fortawesome/free-regular-svg-icons';
 function PostImg(props) {
 	const imgUpload = (e) => {
 		//입력된 파일 확인가능
+		if (e.target.files[0] === undefined) {
+			return;
+		}
 		console.log(e.target.files[0]);
 		const formData = new FormData();
 		formData.append('file', e.target.files[0]);

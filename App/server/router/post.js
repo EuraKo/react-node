@@ -149,6 +149,7 @@ router.post('/imgUpload', (req, res) => {
 			// 이미지 첨부하면 받아지는 이미지 정보값 확인
 			console.log(res.req.file);
 			// 이미지 파일 정보값중에서 경로값을 다시 다시 클라이언트로 전달
+			console.log(res.req.file.path);
 			res.status(200).json({ success: true, filePath: res.req.file.path });
 		}
 	});
