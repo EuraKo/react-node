@@ -57,7 +57,9 @@ function Detail() {
 				{loaded ? (
 					<article>
 						<h2>{detail.title}</h2>
-						{detail.img && <img src={`http://localhost:5000/${detail.img}`} />}
+						{detail.img && (
+							<img src={`https://react-jun.herokuapp.com/${detail.img}`} />
+						)}
 						<p>{detail.content}</p>
 
 						<span>Writer: {detail.writer.displayName}</span>
