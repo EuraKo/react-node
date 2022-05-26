@@ -1,5 +1,7 @@
+import List from './post/List';
+
 function Main() {
-	return <div>Main</div>;
+	return <List count={2} hideSearch={true} />;
 }
 
 export default Main;

@@ -58,9 +58,15 @@ router.post('/list', (req, res) => {
 		sort.createdAt = 1;
 	}
 	//  find는 해당목록 전부다 가져오는거
-	Post.find()
+	Post.find({
+		$or: [
+			{ title: { $regex: req.body.search } },
+			{ content: { $regex: req.body.search } },
+		],
+	})
 		.populate('writer') // 데이터중에 ObjectId를 참조하는 데이터가 있으면 해당 참조 모델 데이터 까지 하위 객체로 합쳐서 가져옴
 		.sort(sort)
+		.limit(req.body.count) // 화면에 출력될개수 0은 전부다
 		.exec()
 		.then((doc) => {
 			// 성공하면 postList라는 객체를 만들어서 넘겨라

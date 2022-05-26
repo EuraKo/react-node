@@ -22,7 +22,7 @@ app.listen(port, () => {
 	// connect는 promise객체를 반환한다.
 	// 안에 몽고디비의 주소를 써주고 아이디:비번도써준다
 	mongoose
-		.connect(config)
+		.connect(config.mongoURI)
 		.then(() => {
 			console.log(`Server app listening in port ${port}`);
 			console.log('connecting mongoDB...');

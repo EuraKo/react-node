@@ -8,11 +8,15 @@ function List(props) {
 	const [list, setList] = useState([]);
 	const [loaded, setLoaded] = useState(false);
 	const [sort, setSort] = useState('new');
+	const [search, setSearch] = useState('');
 
-	// 화면 로딩시 리스트 뿌리기
-	useEffect(() => {
+	const getList = () => {
+		let num = 0;
+		if (props.count) num = props.count;
 		const body = {
 			sort: sort,
+			search: search,
+			count: num,
 		};
 		axios
 			.post('/api/post/list', body)
@@ -27,25 +31,45 @@ function List(props) {
 			.catch((err) => {
 				console.log(err);
 			});
-	}, [sort]);
+	};
+
+	const handleSearch = () => {
+		getList();
+	};
+	// 화면 로딩시 리스트 뿌리기
+	useEffect(getList, [sort]);
 
 	return (
 		<section id='list'>
 			<div className='inner'>
-				<h1>list</h1>
 				{!loaded && <img src={`${process.env.PUBLIC_URL}/img/loading.gif`} />}
-				<button
-					onClick={() => {
-						setSort('new');
-					}}>
-					최신순
-				</button>
-				<button
-					onClick={() => {
-						setSort('old');
-					}}>
-					게시순
-				</button>
+
+				{!props.hideSearch && (
+					<>
+						<h1>list</h1>
+						<button
+							onClick={() => {
+								setSort('new');
+							}}>
+							최신순
+						</button>
+						<button
+							onClick={() => {
+								setSort('old');
+							}}>
+							게시순
+						</button>
+						<input
+							type='text'
+							value={search}
+							onChange={(e) => setSearch(e.target.value)}
+							onKeyUp={(e) => {
+								if (e.keyCode === 13) handleSearch();
+							}}
+						/>
+					</>
+				)}
+
 				{list.map((post, idx) => {
 					console.log(post);
 					return (
