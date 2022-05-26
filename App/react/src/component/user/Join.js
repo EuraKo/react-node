@@ -92,7 +92,7 @@ function Join() {
 						type='email'
 						id='email'
 						value={email}
-						placeholder='이메일을 입력하세요'
+						placeholder='이메일을 입력하세요.'
 						onChange={(e) => setEmail(e.target.value)}
 					/>
 					<br />
