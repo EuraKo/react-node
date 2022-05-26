@@ -12,7 +12,7 @@ const postSchema = new mongoose.Schema(
 			ref: 'Users', // 참조할 모델 스키마의 컬렉션명을 입력
 		},
 	},
-	{ collection: 'Post' }
+	{ collection: 'Post', timestamps: true } // timestamps추가시 doc의 입력, 수정 시간을 저장
 );
 
 const Post = mongoose.model('post', postSchema);

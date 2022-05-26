@@ -11,14 +11,6 @@ function Post() {
 	const [img, setImg] = useState(''); // 업로드된 이미지 저장경로가 담길 state
 	const navigate = useNavigate();
 
-	// 로그인하지 않은 사용자가 접속시 강제로 로그인화면으로 이동
-	useEffect(() => {
-		if (user.accessToken === '') {
-			alert('로그인된 회원만 글을 입력할 수 있습니다.');
-			navigate('/login');
-		}
-	}, []);
-
 	const onSubmit = () => {
 		if (title === '' || content === '') {
 			return alert('모든항목을 입력하세요');

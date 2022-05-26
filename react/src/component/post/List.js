@@ -39,7 +39,9 @@ function List(props) {
 									<Link to={`/post/${post.postNum}`}>{post.title}</Link>
 								</h2>
 								<p>{post.content}</p>
-								<span>writer: {post.writer.displayName}</span>
+								<p>writer: {post.writer.displayName}</p>
+								<p>작성일 : {post.createdAt}</p>
+								<p>업데이트 : {post.updatedAt}</p>
 							</article>
 						</React.Fragment>
 					);

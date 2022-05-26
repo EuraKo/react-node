@@ -13,7 +13,7 @@ function Header() {
 			</h1>
 			<nav id='gnb'>
 				<NavLink to='/list'> List </NavLink>
-				<NavLink to='/post'> Post</NavLink>
+				{user.displayName && <NavLink to='/post'>Write Post </NavLink>}
 			</nav>
 
 			<ul id='util'>
