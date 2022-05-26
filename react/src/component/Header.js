@@ -17,7 +17,7 @@ function Header() {
 			</nav>
 
 			<ul id='util'>
-				{user.accessToken !== '' ? (
+				{user.displayName !== null && user.displayName !== '' ? (
 					<>
 						<li
 							onClick={() => {

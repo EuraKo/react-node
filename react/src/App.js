@@ -17,7 +17,7 @@ import { useEffect } from 'react';
 
 function App() {
 	const dispatch = useDispatch();
-	// const user = useSelector((store) => store.user);
+	const user = useSelector((store) => store.user);
 
 	useEffect(() => {
 		// auth상태 변화를 감지해서 인수로 해당 상태값을 전달
@@ -34,9 +34,9 @@ function App() {
 		});
 	}, []);
 
-	// useEffect(() => {
-	// 	console.log(user);
-	// }, [user]);
+	useEffect(() => {
+		console.log(user);
+	}, [user]);
 
 	return (
 		<>

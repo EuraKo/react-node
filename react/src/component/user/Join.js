@@ -9,7 +9,31 @@ function Join() {
 	const [pw1, setPw1] = useState('');
 	const [pw2, setPw2] = useState('');
 	const [name, setName] = useState('');
+	// 닉네임 검사 결과를 담을 state
+	const [nameCheck, setNameCheck] = useState(false);
+	// 닉네임 관련 출력문이 담길 state
+	const [nameInfo, setNameInfo] = useState('');
 
+	const handleNameCheck = () => {
+		if (!name) {
+			return alert('닉네임을 입력하세요');
+		}
+		const body = {
+			displayName: name,
+		};
+
+		axios.post('/api/user/nameCheck', body).then((res) => {
+			if (res.data.success) {
+				// 해당 사용자의 DB상에 없을때
+				if (res.data.check) {
+					setNameCheck(true);
+					setNameInfo('사용가능한 닉네임입니다.');
+				} else {
+					setNameInfo('중복된 닉네임입니다.');
+				}
+			}
+		});
+	};
 	const handleJoin = async () => {
 		if (!(name && email && pw1 && pw2)) {
 			return alert('모든 항목을 입력해주세요');
@@ -20,6 +44,10 @@ function Join() {
 		// firebase에서 비번이 최소 6글자이상작성
 		if (pw1.length < 6) {
 			return alert('비밀번호는 최소 6글자 이상 입력하세요');
+		}
+		// nameCheck값이 true여야지만 인증통과
+		if (!nameCheck) {
+			return alert('닉네임 중복검사를 진행해주세요.');
 		}
 
 		// 위 조건을 통과해서 회원가입을 하기 위한 정보값을 변수에 할당
@@ -84,6 +112,10 @@ function Join() {
 						placeholder='닉네임을 입력하세요'
 						onChange={(e) => setName(e.target.value)}
 					/>
+					<button onClick={handleNameCheck} className='btnCheck'>
+						중복검사
+					</button>
+					{nameInfo}
 					<br />
 					<button onClick={handleJoin}>회원가입</button>
 				</article>
