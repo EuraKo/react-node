@@ -13,13 +13,25 @@ import Login from './component/user/Login';
 import Join from './component/user/Join';
 
 import './scss/style.scss';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
 	const dispatch = useDispatch();
 	const user = useSelector((store) => store.user);
+	const [noMob, setNoMob] = useState(false);
+
+	const mobSize = () => {
+		const winW = window.innerWidth;
+		if (winW < 820) {
+			setNoMob(true);
+		} else {
+			setNoMob(false);
+		}
+	};
+	window.addEventListener('resize', mobSize);
 
 	useEffect(() => {
+		mobSize();
 		// auth상태 변화를 감지해서 인수로 해당 상태값을 전달
 		firebase.auth().onAuthStateChanged((userInfo) => {
 			// console.log('userInfo : ', userInfo);
@@ -40,6 +52,11 @@ function App() {
 
 	return (
 		<>
+			{noMob && (
+				<div className='no_mobile'>
+					이 사이트는 pc사이즈에 최적화 되어있습니다.
+				</div>
+			)}
 			<Header />
 			<Routes>
 				<Route path='/' element={<Main />} />

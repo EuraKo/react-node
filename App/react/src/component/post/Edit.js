@@ -71,7 +71,7 @@ function Edit() {
 							setTitle(e.target.value);
 						}}
 					/>
-					<PostImg setImg={setImg} />
+					<PostImg setImg={setImg} img={img} />
 					{console.log(img)}
 					<label htmlFor='content'>Content</label>
 					<textarea

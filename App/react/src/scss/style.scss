@@ -8,6 +8,18 @@ $fontPoint: 'Raleway', sans-serif;
 @import 'detail';
 
 #root {
+	.no_mobile {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: #fff;
+		z-index: 50;
+	}
 	> section {
 		float: right;
 		width: calc(100% - 300px);
@@ -34,7 +46,20 @@ $fontPoint: 'Raleway', sans-serif;
 			}
 		}
 	}
-
+	#main {
+		.inner {
+			padding-bottom: 0;
+		}
+		h1 {
+			margin-bottom: 60px;
+		}
+		h2 {
+			font: normal 24px/1 'arial';
+		}
+		#list .inner {
+			padding-top: 20px;
+		}
+	}
 	#post,
 	#edit,
 	#login,
@@ -62,7 +87,6 @@ $fontPoint: 'Raleway', sans-serif;
 					display: block;
 				}
 				input[type='text'],
-				input[type='file'],
 				input[type='email'],
 				input[type='password'],
 				textarea {
@@ -70,6 +94,43 @@ $fontPoint: 'Raleway', sans-serif;
 					min-width: 300px;
 					margin-bottom: 20px;
 					display: block;
+				}
+				.file_group {
+					display: flex;
+					align-items: center;
+					position: relative;
+					margin-bottom: 20px;
+
+					.icon {
+						width: 20px;
+						height: 20px;
+						font-size: 24px;
+						background-color: #afc5bd;
+						border-radius: 5px;
+						padding: 5px;
+						color: #fff;
+					}
+					input[type='file'] {
+						width: 100%;
+						position: absolute;
+						top: 0;
+						left: 0;
+						opacity: 0;
+					}
+				}
+				.now_img {
+					color: #777;
+					margin-left: 10px;
+				}
+				.img_thumb {
+					max-width: 120px;
+					max-height: 120px;
+					margin-bottom: 20px;
+					border: 1px solid #f19f89;
+					img {
+						width: 100%;
+						height: 100%;
+					}
 				}
 				.input_btn {
 					display: flex;

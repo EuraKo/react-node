@@ -44,8 +44,6 @@ function List(props) {
 	return (
 		<section id='list'>
 			<div className='inner'>
-				{!loaded && <img src={`${process.env.PUBLIC_URL}/img/loading.gif`} />}
-
 				{!props.hideSearch && (
 					<>
 						<h1>NOTICE</h1>
@@ -79,6 +77,7 @@ function List(props) {
 						</div>
 					</>
 				)}
+				{!loaded && <img src={`${process.env.PUBLIC_URL}/img/loading.gif`} />}
 				<div className='list_box'>
 					{list.map((post, idx) => {
 						// console.log(post);

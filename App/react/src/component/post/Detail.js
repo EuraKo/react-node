@@ -70,9 +70,23 @@ function Detail() {
 						<h2>{detail.title}</h2>
 						<div className='write_info'>
 							<div className='writer'>작성자 : {detail.writer.displayName}</div>
-							<div className='date'>
-								<p>작성일 : {moment(detail.createdAt).format('L LTS')}</p>
-								<p>수정일 : {moment(detail.updatedAt).format('L LTS')}</p>
+							<div className='date_box'>
+								<div className='date_item'>
+									<p className='date_title'>작성일</p>
+									<div className='dates'>
+										<p>{moment(detail.createdAt).format('L')}</p>
+										<p>{moment(detail.createdAt).format('a hh:mm:ss')}</p>
+									</div>
+								</div>
+								{detail.createdAt !== detail.updatedAt && (
+									<div className='date_item'>
+										<p className='date_title'>최종 수정일</p>
+										<div className='dates'>
+											<p>{moment(detail.updatedAt).format('L')}</p>
+											<p>{moment(detail.updatedAt).format('a hh:mm:ss')}</p>
+										</div>
+									</div>
+								)}
 							</div>
 						</div>
 						{detail.img && (

@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFileImage } from '@fortawesome/free-regular-svg-icons';
 
 function PostImg(props) {
 	const imgUpload = (e) => {
@@ -24,7 +26,20 @@ function PostImg(props) {
 	return (
 		<>
 			<label htmlFor='file'>File</label>
-			<input type='file' id='file' accept='image/*' onChange={imgUpload} />
+			<div className='file_group'>
+				<FontAwesomeIcon icon={faFileImage} className='icon' />
+				<input type='file' id='file' accept='image/*' onChange={imgUpload} />
+				<div className='now_img'>
+					{props.img !== '' && props.img !== undefined
+						? props.img
+						: '첨부된 이미지가 없습니다.'}
+				</div>
+			</div>
+			{props.img !== '' && props.img !== undefined && (
+				<div className='img_thumb'>
+					<img src={`https://react-jun.herokuapp.com/${props.img}`} alt='' />
+				</div>
+			)}
 		</>
 	);
 }

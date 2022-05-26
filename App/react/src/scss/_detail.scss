@@ -8,10 +8,32 @@
 			.write_info {
 				display: flex;
 				justify-content: space-between;
-				font-size: 14px;
+				font-size: 16px;
 				color: #777;
 				margin-bottom: 20px;
-				.writer {
+			}
+			.date_box {
+				display: flex;
+				.date_item {
+					width: 100px;
+					border: 1px solid hsl(13, 79%, 74%);
+					border-radius: 5px;
+					margin-left: 5px;
+					.date_title {
+						font-size: 14px;
+						background-color: #f19f88;
+						color: #fff;
+						text-align: center;
+						padding: 5px 10px;
+					}
+					.dates {
+						font-size: 12px;
+						padding: 5px;
+						text-align: center;
+						p:first-of-type {
+							margin-bottom: 2px;
+						}
+					}
 				}
 			}
 			> img {
