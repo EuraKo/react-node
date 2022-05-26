@@ -1,3 +1,3 @@
-/react/node_modules
-/node/node_modules
-/node/config/dev.js
+/App/react/node_modules
+/App/node_modules
+/App/server/config/dev.js
