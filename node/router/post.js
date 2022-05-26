@@ -50,9 +50,17 @@ router.post('/submit', (req, res) => {
 
 // R:목록페이지 접속시 db데이터 글 호출 요청
 router.post('/list', (req, res) => {
+	const sort = {};
+	if (req.body.sort === 'new') {
+		sort.createdAt = -1; // 역순
+	}
+	if (req.body.sort === 'old') {
+		sort.createdAt = 1;
+	}
 	//  find는 해당목록 전부다 가져오는거
 	Post.find()
 		.populate('writer') // 데이터중에 ObjectId를 참조하는 데이터가 있으면 해당 참조 모델 데이터 까지 하위 객체로 합쳐서 가져옴
+		.sort(sort)
 		.exec()
 		.then((doc) => {
 			// 성공하면 postList라는 객체를 만들어서 넘겨라

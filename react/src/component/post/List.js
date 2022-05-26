@@ -7,11 +7,15 @@ import 'moment/locale/ko';
 function List(props) {
 	const [list, setList] = useState([]);
 	const [loaded, setLoaded] = useState(false);
+	const [sort, setSort] = useState('new');
 
 	// 화면 로딩시 리스트 뿌리기
 	useEffect(() => {
+		const body = {
+			sort: sort,
+		};
 		axios
-			.post('/api/post/list')
+			.post('/api/post/list', body)
 			.then((res) => {
 				console.log(res);
 				if (res.data.success) {
@@ -23,13 +27,25 @@ function List(props) {
 			.catch((err) => {
 				console.log(err);
 			});
-	}, []);
+	}, [sort]);
 
 	return (
 		<section id='list'>
 			<div className='inner'>
 				<h1>list</h1>
 				{!loaded && <img src={`${process.env.PUBLIC_URL}/img/loading.gif`} />}
+				<button
+					onClick={() => {
+						setSort('new');
+					}}>
+					최신순
+				</button>
+				<button
+					onClick={() => {
+						setSort('old');
+					}}>
+					게시순
+				</button>
 				{list.map((post, idx) => {
 					console.log(post);
 					return (
