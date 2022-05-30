@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'; //특정페이지로 이동하거나 백하는거
 import PostImg from './PostImg';
@@ -9,17 +9,18 @@ function Post() {
 	const [title, setTitle] = useState('');
 	const [content, setContent] = useState('');
 	const [img, setImg] = useState(''); // 업로드된 이미지 저장경로가 담길 state
+	const [imgName, setImgName] = useState('');
 	const navigate = useNavigate();
 
 	const onSubmit = () => {
 		if (title === '' || content === '') {
 			return alert('모든항목을 입력하세요');
 		}
-
 		const body = {
 			title: title,
 			content: content,
 			img: img,
+			imgName: imgName,
 			uid: user.uid, // 컴포넌트에서 uid정보값
 		};
 
@@ -52,7 +53,12 @@ function Post() {
 							setTitle(e.target.value);
 						}}
 					/>
-					<PostImg setImg={setImg} img={img} page={'new'} />
+					<PostImg
+						setImg={setImg}
+						img={img}
+						setImgName={setImgName}
+						imgName={imgName}
+					/>
 					<label htmlFor='content'>Content</label>
 					<textarea
 						name='content'

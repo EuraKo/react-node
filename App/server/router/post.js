@@ -91,6 +91,7 @@ router.post('/detail', (req, res) => {
 			// 터미널에서 찍힌다.
 			// console.log(doc);
 			// 찾아진 결과값을 post에 담아 프론트에 응답
+			console.log(doc);
 			res.status(200).json({ success: true, post: doc });
 		})
 		.catch((err) => {
@@ -104,6 +105,7 @@ router.post('/edit', (req, res) => {
 		title: req.body.title,
 		content: req.body.content,
 		img: req.body.img,
+		imgName: req.body.imgName,
 	};
 
 	Post.updateOne({ postNum: Number(req.body.postNum) }, { $set: temp })
@@ -135,7 +137,7 @@ router.post(
 	'/imgUpload',
 	setUpload('node-img-service/post'),
 	(req, res, next) => {
-		console.log(res.req);
+		// console.log(res.req);
 		res.status(200).json({ success: true, filePath: res.req.file.location });
 	}
 );

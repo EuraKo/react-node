@@ -4,8 +4,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileImage } from '@fortawesome/free-regular-svg-icons';
 
 function PostImg(props) {
-	const [nowImg, setNowImg] = useState(''); // 신규시 이미지 경로 담는 곳
-	const [imgName, setImgName] = useState('');
+	console.log(props.img);
+	const [imgSrc, setImgSrc] = useState(props.img || ''); // 이미지 이름만
+
+	const onlyName = (src) => {
+		let imgName = src.split('/');
+		imgName = imgName[imgName.length - 1];
+		// setImgSrc(imgName);
+		props.setImgName(imgName);
+		console.log(imgName);
+	};
+
 	const imgUpload = (e) => {
 		//입력된 파일 확인가능
 		if (e.target.files[0] === undefined) {
@@ -15,32 +24,24 @@ function PostImg(props) {
 		const formData = new FormData();
 		formData.append('file', e.target.files[0]);
 		//formData로 받아지는 형식은 xml형식이기 때문에 for of반복문으로만 확인가능
-		console.log(formData);
-		for (const value of formData) console.log(value);
+		// console.log(formData);
+		// for (const value of formData) console.log(value);
 		axios
 			.post('/api/post/imgUpload', formData)
 			.then((res) => {
-				let imgName = res.data.filePath.split('/');
-				imgName = imgName[imgName.length - 1];
-				// console.log(imgName[imgName.length - 1]);
-				props.setImg(res.data.filePath);
-				setNowImg(res.data.filePath || props.img);
-				setImgName(imgName);
+				props.setImg(res.data.filePath || props.img);
+				onlyName(res.data.filePath);
 			})
 			.catch((err) => {
 				console.log(err);
 			});
 	};
 
-	const nowPageFn = () => {
-		// console.log(nowImg, props.img);
-		if (props.page === 'edit') return props.img;
-		if (props.pate === 'new') return nowImg;
-	};
-
-	useEffect(() => {
-		console.log(nowPageFn());
-	}, []);
+	// useEffect(() => {
+	// 	console.log('start');
+	// 	console.log(props.img);
+	// 	onlyName(props.img);
+	// }, []);
 
 	return (
 		<>
@@ -48,37 +49,17 @@ function PostImg(props) {
 			<div className='file_group'>
 				<FontAwesomeIcon icon={faFileImage} className='icon' />
 				<input type='file' id='file' accept='image/*' onChange={imgUpload} />
-				{props.page === 'edit' ? (
-					<>
-						<div className='now_img'>
-							{props.img !== '' && props.img !== undefined
-								? props.img
-								: '첨부된 이미지가 없습니다.'}
-						</div>
-					</>
-				) : (
-					<>
-						<div className='now_img'>
-							{nowImg !== '' && nowImg !== undefined
-								? imgName
-								: '첨부된 이미지가 없습니다.'}
-						</div>
-					</>
-				)}
+				<div className='now_img'>
+					{props.img !== '' && props.img !== undefined
+						? props.imgName
+						: '첨부된 이미지가 없습니다.'}
+				</div>
 			</div>
-			{props.page === 'edit'
-				? props.img !== '' &&
-				  props.img !== undefined && (
-						<div className='img_thumb'>
-							<img src={props.img} alt='' />
-						</div>
-				  )
-				: nowImg !== '' &&
-				  nowImg !== undefined && (
-						<div className='img_thumb'>
-							<img src={nowImg} alt='' />
-						</div>
-				  )}
+			{props.img !== '' && props.img !== undefined && (
+				<div className='img_thumb'>
+					<img src={props.img} alt='' />
+				</div>
+			)}
 		</>
 	);
 }

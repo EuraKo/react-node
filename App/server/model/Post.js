@@ -6,6 +6,7 @@ const postSchema = new mongoose.Schema(
 		content: String,
 		postNum: Number, // 고유 id값
 		img: String,
+		imgName: String,
 		// writer 항목을 추가하고 User 모델에서의 _id에 해당하는 정보의 다큐먼트 유저정보를 모두 참조
 		writer: {
 			type: mongoose.Schema.Types.ObjectId,
