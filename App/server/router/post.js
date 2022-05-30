@@ -89,7 +89,7 @@ router.post('/detail', (req, res) => {
 		.exec()
 		.then((doc) => {
 			// 터미널에서 찍힌다.
-			console.log(doc);
+			// console.log(doc);
 			// 찾아진 결과값을 post에 담아 프론트에 응답
 			res.status(200).json({ success: true, post: doc });
 		})
@@ -105,6 +105,7 @@ router.post('/edit', (req, res) => {
 		content: req.body.content,
 		img: req.body.img,
 	};
+
 	Post.updateOne({ postNum: Number(req.body.postNum) }, { $set: temp })
 		.exec()
 		.then(() => {

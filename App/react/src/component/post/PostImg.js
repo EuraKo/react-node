@@ -5,6 +5,7 @@ import { faFileImage } from '@fortawesome/free-regular-svg-icons';
 
 function PostImg(props) {
 	const [nowImg, setNowImg] = useState(''); // 신규시 이미지 경로 담는 곳
+	const [imgName, setImgName] = useState('');
 	const imgUpload = (e) => {
 		//입력된 파일 확인가능
 		if (e.target.files[0] === undefined) {
@@ -13,15 +14,18 @@ function PostImg(props) {
 		console.log(e.target.files[0]);
 		const formData = new FormData();
 		formData.append('file', e.target.files[0]);
-		//formData로 받아지는 형식은 xml형식이기 때문에 for of반복문으로만 확인기ㅏ능
-		//console.log(formData);
-		//for (const value of formData) console.log(value);
+		//formData로 받아지는 형식은 xml형식이기 때문에 for of반복문으로만 확인가능
+		console.log(formData);
+		for (const value of formData) console.log(value);
 		axios
 			.post('/api/post/imgUpload', formData)
 			.then((res) => {
-				console.log(res.data);
+				let imgName = res.data.filePath.split('/');
+				imgName = imgName[imgName.length - 1];
+				// console.log(imgName[imgName.length - 1]);
 				props.setImg(res.data.filePath);
 				setNowImg(res.data.filePath || props.img);
+				setImgName(imgName);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -29,7 +33,7 @@ function PostImg(props) {
 	};
 
 	const nowPageFn = () => {
-		console.log(nowImg, props.img);
+		// console.log(nowImg, props.img);
 		if (props.page === 'edit') return props.img;
 		if (props.pate === 'new') return nowImg;
 	};
@@ -56,7 +60,7 @@ function PostImg(props) {
 					<>
 						<div className='now_img'>
 							{nowImg !== '' && nowImg !== undefined
-								? nowImg
+								? imgName
 								: '첨부된 이미지가 없습니다.'}
 						</div>
 					</>
