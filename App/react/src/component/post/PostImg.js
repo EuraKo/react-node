@@ -66,16 +66,13 @@ function PostImg(props) {
 				? props.img !== '' &&
 				  props.img !== undefined && (
 						<div className='img_thumb'>
-							<img
-								src={`https://react-jun.herokuapp.com/${props.img}`}
-								alt=''
-							/>
+							<img src={props.img} alt='' />
 						</div>
 				  )
 				: nowImg !== '' &&
 				  nowImg !== undefined && (
 						<div className='img_thumb'>
-							<img src={`https://react-jun.herokuapp.com/${nowImg}`} alt='' />
+							<img src={nowImg} alt='' />
 						</div>
 				  )}
 		</>

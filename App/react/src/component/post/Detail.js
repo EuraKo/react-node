@@ -22,6 +22,7 @@ function Detail() {
 			.then((res) => {
 				if (res.data.success) {
 					setDetail(res.data.post);
+					console.log(res.data.post);
 					setLoaded(true);
 				}
 			})
@@ -89,9 +90,7 @@ function Detail() {
 								)}
 							</div>
 						</div>
-						{detail.img && (
-							<img src={`https://react-jun.herokuapp.com/${detail.img}`} />
-						)}
+						{detail.img && <img src={detail.img} />}
 						<p>{detail.content}</p>
 					</article>
 				) : (

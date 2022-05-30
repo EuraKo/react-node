@@ -1,6 +1,9 @@
 const express = require('express');
-const router = express.Router();
 const multer = require('multer');
+const router = express.Router();
+
+//setUpload함수 불러오기
+const setUpload = require('../cloud/bucket.js');
 
 // router에 사용되는 모델을 index.js가져옴
 // Post 모델 불러옴
@@ -125,6 +128,18 @@ router.post('/delete', (req, res) => {
 		});
 });
 
+//setUpload미들웨어 함수를 이미지 업로드 라우터에 연결하고
+//인수로 네이버 클라우드에서 만든 버킷 지정
+router.post(
+	'/imgUpload',
+	setUpload('node-img-service/post'),
+	(req, res, next) => {
+		console.log(res.req);
+		res.status(200).json({ success: true, filePath: res.req.file.location });
+	}
+);
+
+/* 
 // multer호출 구문 입력
 // formData로 불러와진 저장 위치 지정 및 파일명 변경
 const storage = multer.diskStorage({
@@ -154,5 +169,5 @@ router.post('/imgUpload', (req, res) => {
 		}
 	});
 });
-
+ */
 module.exports = router;
