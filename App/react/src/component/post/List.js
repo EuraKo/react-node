@@ -95,7 +95,7 @@ function List(props) {
 										</h2>
 										<p className='desc'>
 											{post.content.length > 50
-												? post.content.substr(0, 30) + '...'
+												? post.content.substr(0, 50) + '...'
 												: post.content}
 										</p>
 										<p className='date'>{moment(post.createdAt).format('L')}</p>
