@@ -89,9 +89,15 @@ function List(props) {
 										<p className='writer'>{post.writer.displayName}</p>
 										<h2 className='title'>
 											{/* 해당 게시글의 postNum값을 이용하여 이동 url연결 */}
-											{post.title}
+											{post.title.length > 15
+												? post.title.substr(0, 15) + '...'
+												: post.title}
 										</h2>
-										<p className='desc'>{post.content}</p>
+										<p className='desc'>
+											{post.content.length > 50
+												? post.content.substr(0, 30) + '...'
+												: post.content}
+										</p>
 										<p className='date'>{moment(post.createdAt).format('L')}</p>
 										{/* <p>업데이트 : {post.updatedAt}</p> */}
 										{post.img !== '' && (
